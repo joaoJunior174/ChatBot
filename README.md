@@ -27,6 +27,9 @@
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository. The aim of this project is to build a simple chatbot to use with nestjs and Bloom AI. To test the program, you need to run the nest project and open the chatbot.html file in the root project. After run the nestjs project, you need to open http://localhost:3000/ in the broswer. 
 
 <img src="https://github.com/joaoJunior174/ChatBot/blob/master/a1.png"/>
+<img src="https://github.com/joaoJunior174/ChatBot/blob/master/a2.png"/>
+<img src="https://github.com/joaoJunior174/ChatBot/blob/master/a3.png"/>
+<img src="https://github.com/joaoJunior174/ChatBot/blob/master/a4.png"/>
 
 ## Frontend credits
 All frontend styles and code were found in https://codepen.io/iamsandy/pen/GEwVrN. The aim of this project were just in backend with nest and the using of Bloom AI
