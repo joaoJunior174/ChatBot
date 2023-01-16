@@ -26,6 +26,10 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+
+## Frontend credits
+All frontend styles and code were found in https://codepen.io/iamsandy/pen/GEwVrN. The aim of this project were just in backend with nest and the using of Bloom AI
+
 ## Installation
 
 ```bash
