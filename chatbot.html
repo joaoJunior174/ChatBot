@@ -1,0 +1,114 @@
+<html>
+   <head>
+      <link rel="stylesheet" type="text/css" href="chatbot.css">
+   </head>
+   <body>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+      <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.min.css'>
+      <link rel="stylesheet" href="css/style.css">
+      <div class="chat">
+         <div class="chat-title">
+            <h1>BLoomBot</h1>
+            <h2>Your dumb bot</h2>
+            <figure class="avatar">
+               <img src="20.png" />
+            </figure>
+            <div  class="r-nav">
+               <ul>
+                  <li> <a>X</a></li>
+                  <li> <a><img src="19.png" width="26px" /></a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="messages">
+            <div class="messages-content"></div>
+         </div>
+         <div class="message-box">
+            <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
+            <button type="submit" class="message-submit sound-on-click">Send</button>
+         </div>
+      </div>
+      <div class="bg"></div>
+      <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
+      <script src="js/index.js"></script>
+      <script src="js/sound.js"></script>
+      <script>
+         var $messages = $('.messages-content'),
+            d, h, m,
+            i = 0;
+         
+         $(window).load(function() {
+          $messages.mCustomScrollbar();
+          setTimeout(function() {
+            fakeMessage();
+          }, 100);
+         });
+         
+         function updateScrollbar() {
+          $messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'bottom', {
+            scrollInertia: 10,
+            timeout: 0
+          });
+         }
+         
+         function setDate(){
+          d = new Date()
+          if (m != d.getMinutes()) {
+            m = d.getMinutes();
+            $('<div class="timestamp">' + d.getHours() + ':' + m + '</div>').appendTo($('.message:last'));
+          }
+         }
+         
+         function insertMessage() {
+          var xhr = new XMLHttpRequest();
+    	  xhr.open("POST", "http://localhost:3000", true);
+    	  xhr.setRequestHeader("Content-Type", "application/json");
+    	  xhr.onreadystatechange = function() {
+	      if (xhr.readyState === 4 && xhr.status === 201) {
+		$('.message.loading').remove();
+		$('<div class="message new"><figure class="avatar"><img src="19.png" /></figure>' + xhr.responseText + '</div>').appendTo($('.mCSB_container')).addClass('new');
+               setDate();
+               updateScrollbar();
+	      }
+          };
+          var data = JSON.stringify({ question: $('.message-input').val() });
+          xhr.send(data);
+          $('<div class="message message-personal">' + $('.message-input').val() + '</div>').appendTo($('.mCSB_container')).addClass('new');
+          setDate();
+          $('.message-input').val(null);
+          $('<div class="message loading new"><figure class="avatar"><img src="19.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
+          updateScrollbar();
+         }
+         
+         $('.message-submit').click(function() {
+          insertMessage();
+         });
+         
+         
+         var Fake = [
+          'Hi I\'m a dumb bot, please, make a question for me :))'
+         ]
+         
+         function fakeMessage(msg=null) {
+          if ($('.message-input').val() != '') {
+            return false;
+          }
+          
+           msg = Fake[i];
+           $('<div class="message loading new"><figure class="avatar"><img src="19.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
+          updateScrollbar();
+          
+          setTimeout(function() {
+            $('.message.loading').remove();
+            $('<div class="message new"><figure class="avatar"><img src="19.png" /></figure>' + Fake[i] + '</div>').appendTo($('.mCSB_container')).addClass('new');
+            setDate();
+            updateScrollbar();
+            i++;
+          }, 1000 + (Math.random() * 20) * 100);
+         
+         }
+         
+      </script>
+   </body>
+</html>
